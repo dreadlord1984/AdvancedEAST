@@ -1,10 +1,12 @@
-train_task_id = '2T736'
+import os
+
+train_task_id = '3T256'
 initial_epoch = 0
 epoch_num = 24
 lr = 1e-3
 decay = 5e-4
 # clipvalue = 0.5  # default 0.5, 0 means no clip
-patience = 2
+patience = 5
 load_weights = False
 lambda_inside_score_loss = 4.0
 lambda_side_vertex_code_loss = 1.0
@@ -41,7 +43,7 @@ val_fname = 'val_%s.txt' % train_task_id
 train_fname = 'train_%s.txt' % train_task_id
 # in paper it's 0.3, maybe to large to this problem
 shrink_ratio = 0.2
-# pixels between 0.1 and 0.3 are side pixels
+# pixels between 0.2 and 0.6 are side pixels
 shrink_side_ratio = 0.6
 epsilon = 1e-4
 
@@ -52,6 +54,11 @@ feature_layers_num = len(feature_layers_range)
 # pixel_size = 4
 pixel_size = 2 ** feature_layers_range[-1]
 locked_layers = False
+
+if not os.path.exists('model'):
+    os.mkdir('model')
+if not os.path.exists('saved_model'):
+    os.mkdir('saved_model')
 
 model_weights_path = 'model/weights_%s.{epoch:03d}-{val_loss:.3f}.h5' \
                      % train_task_id
